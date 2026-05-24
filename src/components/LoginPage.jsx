@@ -75,11 +75,6 @@ export default function LoginPage({ onLogin }) {
           >
             Masuk
           </button>
-
-          <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.05] p-4 text-xs leading-5 text-white/55">
-            <p>Admin: admin / admin123</p>
-            <p>User: user / user123</p>
-          </div>
         </form>
       </section>
     </main>
