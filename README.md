@@ -32,6 +32,40 @@ data/tickets.sqlite
 - SQLite lokal via `node:sqlite`
 - Neon/Postgres untuk deploy Vercel via `DATABASE_URL`
 
+## Deploy Netlify
+
+Untuk production di Netlify, gunakan Neon/Postgres agar data tersimpan permanen.
+
+1. Import repository GitHub ke Netlify.
+2. Build settings:
+
+```text
+Build command: npm run build
+Publish directory: dist
+```
+
+3. Tambahkan environment variable:
+
+```text
+DATABASE_URL=postgres://...
+```
+
+4. Deploy site.
+
+File `netlify.toml` sudah mengarahkan:
+
+```text
+/api/* -> /.netlify/functions/api/*
+```
+
+QR Code pada e-ticket akan berisi link:
+
+```text
+https://domain-anda.com/#/verify?invoice=...&participant=...&token=...
+```
+
+Saat QR discan, halaman verifikasi akan mengecek invoice, peserta, dan token ke database.
+
 ## Deploy Vercel
 
 Untuk production, gunakan database Postgres/Neon karena SQLite lokal tidak permanen di Vercel.
