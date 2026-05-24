@@ -131,7 +131,7 @@ const ETicketPreview = forwardRef(function ETicketPreview({ ticket, sequenceLabe
         </p>
         <img crossOrigin="anonymous" src={ASSETS.platformLogo} alt="Info Konser" className="mx-auto mt-1.5 max-h-10 max-w-[150px] object-contain" />
         <p className="mt-2 text-[8px] uppercase tracking-[0.14em]" style={{ color: 'rgba(255,255,255,0.38)' }}>
-          Copyright BEE EPIC EVENT ORGANIZR
+          Copyright BEE EPIC EVENT ORGANIZER
         </p>
       </div>
     </article>

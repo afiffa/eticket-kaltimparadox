@@ -113,7 +113,7 @@ export async function downloadTicketPdf(element, ticket) {
   const canvas = await renderTicket(element)
   const imageData = canvas.toDataURL('image/jpeg', 0.98)
   const pdfWidth = 430
-  const pdfHeight = (canvas.height * pdfWidth) / canvas.width
+  const pdfHeight = Math.ceil((canvas.height * pdfWidth) / canvas.width) + 8
   const pdf = new jsPDF({
     orientation: 'portrait',
     unit: 'px',
@@ -127,12 +127,7 @@ export async function downloadTicketPdf(element, ticket) {
 
 export async function downloadTicketsPdf(elements, order) {
   const pdfWidth = 430
-  const pdf = new jsPDF({
-    orientation: 'portrait',
-    unit: 'px',
-    format: [pdfWidth, 760],
-    hotfixes: ['px_scaling'],
-  })
+  let pdf = null
 
   for (let index = 0; index < elements.length; index += 1) {
     const element = elements[index]
@@ -140,12 +135,21 @@ export async function downloadTicketsPdf(elements, order) {
 
     const canvas = await renderTicket(element)
     const imageData = canvas.toDataURL('image/jpeg', 0.98)
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width
+    const pdfHeight = Math.ceil((canvas.height * pdfWidth) / canvas.width) + 8
 
-    if (index > 0) pdf.addPage([pdfWidth, pdfHeight], 'portrait')
+    if (!pdf) {
+      pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [pdfWidth, pdfHeight],
+        hotfixes: ['px_scaling'],
+      })
+    } else {
+      pdf.addPage([pdfWidth, pdfHeight], 'portrait')
+    }
     pdf.setPage(index + 1)
-    pdf.addImage(imageData, 'JPEG', 0, 0, pdfWidth, pdfHeight)
+    pdf.addImage(imageData, 'JPEG', 0, 0, pdfWidth, pdfHeight - 8)
   }
 
-  pdf.save(buildOrderFilename(order, 'pdf'))
+  pdf?.save(buildOrderFilename(order, 'pdf'))
 }
