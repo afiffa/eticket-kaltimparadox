@@ -127,9 +127,12 @@ const ETicketPreview = forwardRef(function ETicketPreview({ ticket, sequenceLabe
 
       <div className="mt-3 border-t pt-3 text-center" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
         <p className="text-[9px] uppercase tracking-[0.18em]" style={{ color: 'rgba(255,255,255,0.45)' }}>
-          Ticketing platform by
+          Ticketing Partner
         </p>
         <img crossOrigin="anonymous" src={ASSETS.platformLogo} alt="Info Konser" className="mx-auto mt-1.5 max-h-10 max-w-[150px] object-contain" />
+        <p className="mt-2 text-[8px] uppercase tracking-[0.14em]" style={{ color: 'rgba(255,255,255,0.38)' }}>
+          Copyright BEE EPIC EVENT ORGANIZR
+        </p>
       </div>
     </article>
   )

@@ -10,23 +10,23 @@ export const PAYMENT_STATUSES = ['Pending', 'Paid']
 export const GENDERS = ['Laki-laki', 'Perempuan']
 
 export const DEFAULT_PARTICIPANT = {
-  participantName: 'Muhammad Arjuna',
-  participantEmail: 'peserta@example.com',
-  participantWhatsapp: '08123456788',
+  participantName: '',
+  participantEmail: '',
+  participantWhatsapp: '',
   participantBirthDate: '',
   gender: '',
 }
 
 export const DEFAULT_FORM = {
   noInvoice: '',
-  buyerName: 'Afif Arjuna',
-  buyerEmail: 'af.creative99@gmail.com',
-  buyerWhatsapp: '08123456789',
+  buyerName: '',
+  buyerEmail: '',
+  buyerWhatsapp: '',
   participants: [DEFAULT_PARTICIPANT],
-  ticketCategory: 'VIP',
+  ticketCategory: '',
   ticketQuantity: 1,
   paymentMethod: 'Transfer Bank',
-  paymentStatus: 'Paid',
+  paymentStatus: 'Pending',
   notes: '',
 }
 
