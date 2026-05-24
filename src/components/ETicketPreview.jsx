@@ -35,7 +35,7 @@ const ETicketPreview = forwardRef(function ETicketPreview({ ticket, sequenceLabe
           13 Juni 2026
         </div>
         <span
-          className="rounded-full px-3 py-1 text-[10px] font-semibold tracking-[0.1em]"
+          className="inline-flex min-h-6 items-center justify-center rounded-full px-3 text-center text-[10px] font-semibold leading-none tracking-[0.1em]"
           style={{
             backgroundColor: isPaid ? '#34d399' : '#fcd34d',
             color: isPaid ? '#022c22' : '#451a03',
