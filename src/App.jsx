@@ -3,6 +3,7 @@ import DownloadActions from './components/DownloadActions'
 import ETicketPreview from './components/ETicketPreview'
 import OrdersTable from './components/OrdersTable'
 import TicketForm from './components/TicketForm'
+import LoginPage from './components/LoginPage'
 import {
   createBlankParticipant,
   createInitialForm,
@@ -29,6 +30,11 @@ function App() {
     return window.location.hash === '#/orders' ? 'orders' : 'form'
   })
   const [editingOrderId, setEditingOrderId] = useState(null)
+  const [session, setSession] = useState(() => {
+    const stored = localStorage.getItem('ticketAuthSession')
+    return stored ? JSON.parse(stored) : null
+  })
+  const isAdmin = session?.role === 'admin'
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -183,6 +189,10 @@ function App() {
   }
 
   const openOrdersPage = () => {
+    if (!isAdmin) {
+      setToast('Akses Data Pembeli hanya untuk Admin.')
+      return
+    }
     window.location.hash = '#/orders'
     setPage('orders')
   }
@@ -217,6 +227,29 @@ function App() {
   const participantCount = latestTicket?.participants?.length || 0
   const activeTicket = latestTicket ? getParticipantTicket(latestTicket, activeTicketIndex) : null
 
+  const handleLogin = (account) => {
+    localStorage.setItem('ticketAuthSession', JSON.stringify(account))
+    setSession(account)
+    setToast(`Login sebagai ${account.label}.`)
+    if (account.role !== 'admin' && window.location.hash === '#/orders') {
+      window.location.hash = '#/'
+      setPage('form')
+    }
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('ticketAuthSession')
+    setSession(null)
+    setLatestTicket(null)
+    setEditingOrderId(null)
+    window.location.hash = '#/'
+    setPage('form')
+  }
+
+  if (!session && page !== 'verify') {
+    return <LoginPage onLogin={handleLogin} />
+  }
+
   return (
     <main className="min-h-screen bg-[#04111d] bg-[radial-gradient(circle_at_top_left,rgba(24,160,178,0.28),transparent_34%),linear-gradient(145deg,#04111d_0%,#063348_48%,#04111d_100%)] px-4 py-6 text-white sm:px-6 lg:px-8">
       {toast ? (
@@ -225,9 +258,22 @@ function App() {
         </div>
       ) : null}
 
+      <div className="mx-auto mb-4 flex w-full max-w-6xl items-center justify-between rounded-2xl border border-white/15 bg-white/[0.06] px-4 py-3 text-sm text-white">
+        <span>{session ? `${session.label}: ${session.username}` : 'QR Verification'}</span>
+        {session ? (
+          <button
+            className="rounded-xl border border-white/20 px-3 py-2 font-semibold transition hover:bg-white/10"
+            type="button"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        ) : null}
+      </div>
+
       {page === 'verify' ? (
         <VerifyPage onBack={openFormPage} />
-      ) : page === 'orders' ? (
+      ) : page === 'orders' && isAdmin ? (
         <OrdersTable onBack={openFormPage} onEdit={editOrder} onNotify={setToast} />
       ) : (
       <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[minmax(0,430px)_minmax(0,430px)] lg:items-start lg:justify-center">
@@ -238,6 +284,7 @@ function App() {
                 Mode Edit
               </span>
             ) : null}
+            {isAdmin ? (
             <button
               className="rounded-2xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/15"
               type="button"
@@ -245,6 +292,7 @@ function App() {
             >
               Data Pembeli
             </button>
+            ) : null}
           </div>
           <TicketForm
             values={form}

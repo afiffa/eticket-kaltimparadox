@@ -43,12 +43,20 @@ export default function VerifyPage({ onBack }) {
             <CheckCircle2 className="mx-auto h-14 w-14 text-emerald-300" />
             <h1 className="mt-4 text-3xl font-semibold text-white">Tiket Valid</h1>
             <p className="mt-2 text-sm text-white/65">QR Code terdaftar di database.</p>
+            <div
+              className="mt-5 rounded-2xl px-4 py-4 text-center text-2xl font-bold tracking-wide"
+              style={{
+                backgroundColor: ticket.paymentStatus === 'Paid' ? '#34d399' : '#fcd34d',
+                color: ticket.paymentStatus === 'Paid' ? '#022c22' : '#451a03',
+              }}
+            >
+              {ticket.paymentStatus === 'Paid' ? 'PAID' : 'PENDING PAYMENT'}
+            </div>
             <div className="mt-5 space-y-3 rounded-2xl border border-white/15 bg-white/[0.06] p-4 text-left text-sm">
               <p><span className="text-white/45">Invoice:</span> <span className="font-semibold text-white">{ticket.noInvoice}</span></p>
               <p><span className="text-white/45">Peserta:</span> <span className="font-semibold text-white">{ticket.participantName}</span></p>
               <p><span className="text-white/45">Email:</span> <span className="font-semibold text-white">{ticket.participantEmail}</span></p>
               <p><span className="text-white/45">Kategori:</span> <span className="font-semibold text-white">{ticket.ticketCategory}</span></p>
-              <p><span className="text-white/45">Status:</span> <span className="font-semibold text-white">{ticket.paymentStatus}</span></p>
             </div>
           </>
         ) : null}

@@ -30,27 +30,27 @@ const ETicketPreview = forwardRef(function ETicketPreview({ ticket, sequenceLabe
         color: '#ffffff',
       }}
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-2">
         <div className="text-[9px] uppercase tracking-[0.24em]" style={{ color: 'rgba(255,255,255,0.55)' }}>
           13 Juni 2026
         </div>
-        <img crossOrigin="anonymous" src={ASSETS.topSponsor} alt="Sponsor" className="max-h-8 max-w-[118px] object-contain" />
-      </div>
-
-      <div className="mt-2 flex flex-col items-center text-center">
-        <img crossOrigin="anonymous" src={ASSETS.mainLogo} alt="Kaltim Paradox" className="max-h-24 w-full max-w-[220px] object-contain" />
-        <h2 className="mt-2 text-[30px] font-semibold leading-none tracking-[0.08em]">E-TICKET</h2>
         <span
-          className="mt-2 rounded-full px-3 py-1 text-[11px] font-semibold tracking-[0.1em]"
+          className="rounded-full px-3 py-1 text-[10px] font-semibold tracking-[0.1em]"
           style={{
             backgroundColor: isPaid ? '#34d399' : '#fcd34d',
             color: isPaid ? '#022c22' : '#451a03',
           }}
         >
-          {isPaid ? 'PAID' : 'PENDING PAYMENT'}
+          {isPaid ? 'PAID' : 'PENDING'}
         </span>
+        <img crossOrigin="anonymous" src={ASSETS.topSponsor} alt="Sponsor" className="ml-auto max-h-8 max-w-[118px] object-contain" />
+      </div>
+
+      <div className="mt-2 flex flex-col items-center text-center">
+        <img crossOrigin="anonymous" src={ASSETS.mainLogo} alt="Kaltim Paradox" className="max-h-24 w-full max-w-[220px] object-contain" />
+        <h2 className="mt-2 text-[30px] font-semibold leading-none tracking-[0.08em]">E-TICKET</h2>
         {sequenceLabel ? (
-          <p className="mt-1 text-[10px] uppercase tracking-[0.16em]" style={{ color: 'rgba(255,255,255,0.55)' }}>
+          <p className="mt-2 text-[10px] uppercase tracking-[0.16em]" style={{ color: 'rgba(255,255,255,0.55)' }}>
             {sequenceLabel}
           </p>
         ) : null}
